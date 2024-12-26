@@ -1,3 +1,4 @@
+import common.exceptions.BookNotFoundException;
 import common.exceptions.DuplicateBookException;
 
 import java.util.Comparator;
@@ -19,7 +20,7 @@ public class LibraryInventory {
                     1. Display Books
                     2. Search For Books
                     3. Add A New Book
-                    4. Remove A Book
+                    4. Remove A Book By ID
                     5. Exit The Program
                     """);
 
@@ -37,7 +38,7 @@ public class LibraryInventory {
                 case 1 -> displayBooks();
                 case 2 -> searchBooks();
                 case 3 -> addBook();
-                case 4 -> System.out.println("Remove A Book");
+                case 4 -> removeBookById();
                 case 5 -> exit = true;
                 default -> System.out.println("Invalid option. Please try again.");
             }
@@ -107,6 +108,23 @@ public class LibraryInventory {
         } catch (DuplicateBookException e) {
             System.out.println(e.getMessage());
         } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please try again.");
+            scanner.nextLine();
+        }
+    }
+
+    private static void removeBookById() {
+        System.out.println("Remove A Book By ID");
+        try {
+            System.out.print("Enter Book ID to remove: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+
+            library.removeBookById(id);
+            System.out.println("Book removed successfully.");
+        } catch (BookNotFoundException bookNotFoundException) {
+            System.out.println(bookNotFoundException.getMessage());
+        } catch (InputMismatchException inputMismatchException) {
             System.out.println("Invalid input. Please try again.");
             scanner.nextLine();
         }

@@ -1,3 +1,4 @@
+import common.exceptions.BookNotFoundException;
 import common.exceptions.DuplicateBookException;
 
 import java.util.ArrayList;
@@ -35,5 +36,11 @@ public class Library {
         if (books.stream().anyMatch(b -> b.getId() == book.getId()))
             throw new DuplicateBookException("A book with this ID already exists.");
         books.add(book);
+    }
+
+    public void removeBookById(int id) throws BookNotFoundException {
+        Book book = books.stream().filter(b -> b.getId() == id).findFirst()
+                .orElseThrow(() -> new BookNotFoundException("Book not found."));
+        books.remove(book);
     }
 }
