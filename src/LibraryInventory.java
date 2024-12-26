@@ -1,3 +1,5 @@
+import common.exceptions.DuplicateBookException;
+
 import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -34,7 +36,7 @@ public class LibraryInventory {
             switch (option) {
                 case 1 -> displayBooks();
                 case 2 -> searchBooks();
-                case 3 -> System.out.println("Add A New Book");
+                case 3 -> addBook();
                 case 4 -> System.out.println("Remove A Book");
                 case 5 -> exit = true;
                 default -> System.out.println("Invalid option. Please try again.");
@@ -68,7 +70,7 @@ public class LibraryInventory {
         String yearString = scanner.nextLine();
         Integer year;
         try {
-            year = (yearString.isBlank()) ? null: Integer.parseInt(yearString);
+            year = (yearString.isBlank()) ? null : Integer.parseInt(yearString);
         } catch (NumberFormatException e) {
             System.out.println("Invalid year. Please try again.");
             return;
@@ -77,5 +79,36 @@ public class LibraryInventory {
         List<Book> books = library.searchBooks(title, author, year);
         if (books.isEmpty()) System.out.println("No books found.");
         else books.forEach(System.out::println);
+    }
+
+    private static void addBook() {
+        System.out.println("Add A New Book");
+        try {
+            System.out.print("Enter ID: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("Enter Title: ");
+            String title = scanner.nextLine();
+
+            System.out.print("Enter Author: ");
+            String author = scanner.nextLine();
+
+            System.out.print("Enter Publication Year: ");
+            int year = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("Enter Genre: ");
+            String genre = scanner.nextLine();
+
+            Book book = BookFactory.createBook(id, title, author, year, genre);
+            library.addBook(book);
+            System.out.println("Book added successfully: " + book);
+        } catch (DuplicateBookException e) {
+            System.out.println(e.getMessage());
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please try again.");
+            scanner.nextLine();
+        }
     }
 }
