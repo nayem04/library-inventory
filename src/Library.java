@@ -38,6 +38,15 @@ public class Library {
         books.add(book);
     }
 
+    public void updateBookByID(int id, String title, String author, int year, String genre) throws BookNotFoundException {
+        Book book = books.stream().filter(b -> b.getId() == id).findFirst()
+                .orElseThrow(() -> new BookNotFoundException("Book not found."));
+        if (title != null && !title.isBlank()) book.setTitle(title);
+        if (author != null && !author.isBlank()) book.setAuthor(author);
+        if (year > 0) book.setPublicationYear(year);
+        if (genre != null && !genre.isBlank()) book.setGenre(genre);
+    }
+
     public void removeBookById(int id) throws BookNotFoundException {
         Book book = books.stream().filter(b -> b.getId() == id).findFirst()
                 .orElseThrow(() -> new BookNotFoundException("Book not found."));

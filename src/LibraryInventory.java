@@ -20,8 +20,9 @@ public class LibraryInventory {
                     1. Display Books
                     2. Search For Books
                     3. Add A New Book
-                    4. Remove A Book By ID
-                    5. Exit The Program
+                    4. Update A Book By ID
+                    5. Remove A Book By ID
+                    6. Exit The Program
                     """);
 
             int option;
@@ -38,8 +39,9 @@ public class LibraryInventory {
                 case 1 -> displayBooks();
                 case 2 -> searchBooks();
                 case 3 -> addBook();
-                case 4 -> removeBookById();
-                case 5 -> exit = true;
+                case 4 -> updateBookByID();
+                case 5 -> removeBookById();
+                case 6 -> exit = true;
                 default -> System.out.println("Invalid option. Please try again.");
             }
         }
@@ -108,6 +110,35 @@ public class LibraryInventory {
         } catch (DuplicateBookException e) {
             System.out.println(e.getMessage());
         } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please try again.");
+            scanner.nextLine();
+        }
+    }
+
+    private static void updateBookByID() {
+        try {
+            System.out.print("Enter Book ID to update: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("Enter new Title or enter: ");
+            String title = scanner.nextLine();
+
+            System.out.print("Enter new Author or enter: ");
+            String author = scanner.nextLine();
+
+            System.out.print("Enter new Publication Year or enter: ");
+            String yearInput = scanner.nextLine();
+            int year = yearInput.isBlank() ? 0 : Integer.parseInt(yearInput);
+
+            System.out.print("Enter new Genre or enter: ");
+            String genre = scanner.nextLine();
+
+            library.updateBookByID(id, title, author, year, genre);
+            System.out.println("Book updated successfully.");
+        } catch (BookNotFoundException bookNotFoundException) {
+            System.out.println(bookNotFoundException.getMessage());
+        } catch (InputMismatchException inputMismatchException) {
             System.out.println("Invalid input. Please try again.");
             scanner.nextLine();
         }
