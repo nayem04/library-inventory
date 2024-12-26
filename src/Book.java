@@ -57,7 +57,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return String.format("Book ID: %d, Title: %s, Author: %s, Year: %d, Genre: %s",
+        return String.format("ID: %d, Title: %s, Author: %s, Year: %d, Genre: %s",
                 id, title, author, publicationYear, genre);
     }
 }
