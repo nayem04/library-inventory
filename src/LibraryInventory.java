@@ -51,6 +51,7 @@ public class LibraryInventory {
 
     private static void displayBooks() {
         System.out.println("Display Books");
+
         List<Book> books = library.getBooks();
         if (books.isEmpty()) {
             System.out.println("There are no books in the library.");
@@ -63,6 +64,7 @@ public class LibraryInventory {
 
     private static void searchBooks() {
         System.out.println("Search For Books");
+
         System.out.print("Enter Title or enter: ");
         String title = scanner.nextLine();
 
@@ -80,12 +82,16 @@ public class LibraryInventory {
         }
 
         List<Book> books = library.searchBooks(title, author, year);
-        if (books.isEmpty()) System.out.println("No books found.");
-        else books.forEach(System.out::println);
+        if (books.isEmpty()) {
+            System.out.println("No books found.");
+        } else {
+            books.forEach(System.out::println);
+        }
     }
 
     private static void addBook() {
         System.out.println("Add A New Book");
+
         try {
             System.out.print("Enter ID: ");
             int id = scanner.nextInt();
@@ -116,6 +122,8 @@ public class LibraryInventory {
     }
 
     private static void updateBookByID() {
+        System.out.println("Update A Book By ID");
+
         try {
             System.out.print("Enter Book ID to update: ");
             int id = scanner.nextInt();
@@ -146,6 +154,7 @@ public class LibraryInventory {
 
     private static void removeBookById() {
         System.out.println("Remove A Book By ID");
+
         try {
             System.out.print("Enter Book ID to remove: ");
             int id = scanner.nextInt();

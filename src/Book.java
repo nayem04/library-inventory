@@ -5,7 +5,8 @@ public class Book {
     private int publicationYear;
     private String genre;
 
-    public Book() {}
+    public Book() {
+    }
 
     public Book(int id, String title, String author, int publicationYear, String genre) {
         this.id = id;
